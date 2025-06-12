@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import platform
 import matplotlib
+import matplotlib.font_manager as fm
+
 
 def run_relationship(total_df):
 
