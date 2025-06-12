@@ -1,5 +1,5 @@
 import pandas as pd
-from utils import load_data
+from util import load_data
 import streamlit as st
 
 st.set_page_config(page_title="재난 문자 인식 대시보드", layout="wide")

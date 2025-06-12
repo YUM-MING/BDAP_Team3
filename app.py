@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
-from utils import load_data
+from util import load_data
 ## 호출
 from home import run_home
 from message.message_home import run_message
