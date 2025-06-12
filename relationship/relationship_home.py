@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
-
+import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import platform
@@ -9,13 +9,11 @@ import matplotlib
 
 def run_relationship(total_df):
 
-    # ✅ 한글 폰트 설정
-    if platform.system() == 'Darwin':
-        matplotlib.rc('font', family='AppleGothic')
-    elif platform.system() == 'Windows':
-        matplotlib.rc('font', family='Malgun Gothic')
-    else:
-        matplotlib.rc('font', family='NanumGothic')
+    font_path = os.path.join(os.path.dirname(__file__), "malgun.ttf")
+    font_name = fm.FontProperties(fname=font_path).get_name()
+
+    # ✅ matplotlib에 폰트 적용
+    matplotlib.rc('font', family=font_name)
     matplotlib.rcParams['axes.unicode_minus'] = False
 
     # 데이터 로드
