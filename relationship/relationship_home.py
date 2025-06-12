@@ -8,8 +8,25 @@ import platform
 import matplotlib
 import matplotlib.font_manager as fm
 
-
 def run_relationship(total_df):
+
+     # ✅ 사용자 폰트 경로 지정 (예: relationship 폴더 내부 NanumGothic-Regular.ttf)
+    font_path = os.path.join(os.path.dirname(__file__), "malgun.ttf")
+
+    # ✅ 폰트 등록 및 설정
+    if os.path.exists(font_path):
+        fm.fontManager.addfont(font_path)
+        font_name = fm.FontProperties(fname=font_path).get_name()
+        matplotlib.rc('font', family=font_name)
+    else:
+        if platform.system() == 'Darwin':
+            matplotlib.rc('font', family='AppleGothic')
+        elif platform.system() == 'Windows':
+            matplotlib.rc('font', family='Malgun Gothic')
+        else:
+            matplotlib.rc('font', family='malgun')
+
+    matplotlib.rcParams['axes.unicode_minus'] = False
 
     # 데이터 로드
     @st.cache_data
