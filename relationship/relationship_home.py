@@ -11,13 +11,6 @@ import matplotlib.font_manager as fm
 
 def run_relationship(total_df):
 
-    font_path = os.path.join(os.path.dirname(__file__), "malgun.ttf")
-    font_name = fm.FontProperties(fname=font_path).get_name()
-
-    # ✅ matplotlib에 폰트 적용
-    matplotlib.rc('font', family=font_name)
-    matplotlib.rcParams['axes.unicode_minus'] = False
-
     # 데이터 로드
     @st.cache_data
     def load():
