@@ -7,8 +7,9 @@ from SNS.config import YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION # config.py
 
 # Streamlit의 secrets에서 API 키를 가져옵니다.
 # 이 모듈이 로드될 때 한 번만 실행됩니다.
+
 try:
-    YOUTUBE_API_KEY_VALUE = st.secrets["youtube_api_key"]
+    YOUTUBE_API_KEY_VALUE = "AIzaSyBPSD9lGwsxGOihqH77MOlBHRHbGv_Y1dw"
 except KeyError:
     YOUTUBE_API_KEY_VALUE = None
     # app.py에서 API 키 존재 여부를 확인하므로 여기서는 오류를 발생시키지 않을 수 있음
