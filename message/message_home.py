@@ -40,15 +40,20 @@ def run_message(total_df):
 
     # 선 그래프
     fig1 = px.line(yearly_counts, x='연도', y='재난문자_건수',
-                title='연도별 재난문자 발송 개수',
-                labels={'연도': '연도', '재난문자_건수': '문자 발송 건수'},
-                markers=True)
+               title='연도별 재난문자 발송 개수',
+               labels={'연도': '연도', '재난문자_건수': '문자 발송 건수'},
+               markers=True)
+
+    fig1.update_xaxes(type='category')  # ✨ 추가: x축을 범주형으로!
+
     highlight = yearly_counts[yearly_counts['연도'] == selected_year]
     fig1.add_scatter(x=highlight['연도'], y=highlight['재난문자_건수'],
                     mode='markers',
                     marker=dict(size=12, color='red'),
                     name='선택된 연도')
+
     st.plotly_chart(fig1)
+
 
     # ✅ 재난유형별 막대 그래프 (상세보기 자동 출력)
     filtered_detail = type_counts[type_counts['연도'] == selected_year]
