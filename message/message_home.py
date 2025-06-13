@@ -28,6 +28,7 @@ def run_message(total_df):
 
     # 데이터 집계
     yearly_counts = data.groupby('연도')['재난문자_건수'].sum().reset_index()
+    yearly_counts['연도'] = yearly_counts['연도'].astype(str)
     type_counts = expanded_data.groupby(['연도', '재난유형_리스트'])['재난문자_건수'].sum().reset_index()
     region_counts = data.groupby(['연도', '지역'])['재난문자_건수'].sum().reset_index()
 
