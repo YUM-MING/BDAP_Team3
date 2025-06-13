@@ -39,27 +39,34 @@ def run_message(total_df):
 
     # 선 그래프
     fig1 = px.line(yearly_counts, x='연도', y='재난문자_건수',
-               title='연도별 재난문자 발송 개수',
-               labels={'연도': '연도', '재난문자_건수': '문자 발송 건수'},
-               markers=True)
+                   title='연도별 재난문자 발송 개수',
+                   labels={'연도': '연도', '재난문자_건수': '문자 발송 건수'},
+                   markers=True)
 
-    fig1.update_xaxes(type='category')  # ✨ 추가: x축을 범주형으로!
+    # 👇 눈금 강제 고정 (소수점 방지)
+    fig1.update_layout(
+        xaxis=dict(
+            tickmode='array',
+            tickvals=yearly_counts['연도'],
+            ticktext=[str(y) for y in yearly_counts['연도']]
+        )
+    )
 
+    # 선택 연도 강조
     highlight = yearly_counts[yearly_counts['연도'] == selected_year]
     fig1.add_scatter(x=highlight['연도'], y=highlight['재난문자_건수'],
-                    mode='markers',
-                    marker=dict(size=12, color='red'),
-                    name='선택된 연도')
+                     mode='markers',
+                     marker=dict(size=12, color='red'),
+                     name='선택된 연도')
 
     st.plotly_chart(fig1)
-
 
     # ✅ 재난유형별 막대 그래프 (상세보기 자동 출력)
     filtered_detail = type_counts[type_counts['연도'] == selected_year]
     fig2 = px.bar(filtered_detail, x='재난유형_리스트', y='재난문자_건수',
-                title=f'{selected_year}년 재난유형별 재난문자 통계',
-                labels={'재난유형_리스트': '재난유형', '재난문자_건수': '문자 개수'},
-                color='재난유형_리스트')
+                  title=f'{selected_year}년 재난유형별 재난문자 통계',
+                  labels={'재난유형_리스트': '재난유형', '재난문자_건수': '문자 개수'},
+                  color='재난유형_리스트')
     fig2.update_layout(bargap=0.2)
     st.plotly_chart(fig2)
 
@@ -75,29 +82,29 @@ def run_message(total_df):
 
     # 🔸 탑 5 재난유형 그래프
     if st.session_state['show_top5']:
-        top5 = type_counts[type_counts['연도'] == selected_year].sort_values(by='재난문자_건수', ascending=False).head(5)
+        top5 = filtered_detail.sort_values(by='재난문자_건수', ascending=False).head(5)
         fig3 = px.bar(top5, x='재난유형_리스트', y='재난문자_건수',
-                    title=f'{selected_year}년 탑 5 재난유형',
-                    labels={'재난유형_리스트': '재난유형', '재난문자_건수': '문자 개수'},
-                    color='재난유형_리스트')
+                      title=f'{selected_year}년 탑 5 재난유형',
+                      labels={'재난유형_리스트': '재난유형', '재난문자_건수': '문자 개수'},
+                      color='재난유형_리스트')
         st.plotly_chart(fig3)
 
     # 🔸 도넛 차트: 지역별
     filtered_region = region_counts[region_counts['연도'] == selected_year]
     fig4 = px.pie(filtered_region, names='지역', values='재난문자_건수',
-                title=f'{selected_year}년 지역별 재난문자 발송 비율',
-                hole=0.4)
+                  title=f'{selected_year}년 지역별 재난문자 발송 비율',
+                  hole=0.4)
     st.plotly_chart(fig4)
 
     # 🔘 버튼: 상위 3개 지역
     if st.button('📍 상위 3개 지역 보기'):
         st.session_state['show_top3'] = True
-        
+
     # 🔸 상위 3개 지역 그래프
     if st.session_state['show_top3']:
         top3_region = filtered_region.sort_values(by='재난문자_건수', ascending=False).head(3)
         fig5 = px.bar(top3_region, x='재난문자_건수', y='지역', orientation='h',
-                    title=f'{selected_year}년 상위 3개 지역 재난문자 발송',
-                    labels={'재난문자_건수': '문자 개수', '지역': '지역'},
-                    color='지역')
+                      title=f'{selected_year}년 상위 3개 지역 재난문자 발송',
+                      labels={'재난문자_건수': '문자 개수', '지역': '지역'},
+                      color='지역')
         st.plotly_chart(fig5)
