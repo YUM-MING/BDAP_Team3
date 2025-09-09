@@ -1,5 +1,9 @@
 # BDAP_Team3
 [BDAP_Team3] 재난 문자 데이터 분석: 기후 위기 체감도 시각화 
+
+## 📺 직접 보러 가기
+> https://bdap-team3.streamlit.app/
+
 ## 📅 분석 기간
 > 2025.05.02 ~ 2025.06.20
 
